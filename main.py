@@ -16,11 +16,11 @@ HF_TOKEN = os.getenv("HF_TOKEN")
 # 2. Log in to Hugging Face
 login(token=HF_TOKEN)
 
-# 3. Load DeepSeek model from Hugging Face
+# 3. Load lightweight FLAN-T5 model (no disk issues!)
 pipe = pipeline(
-    "text-generation",
-    model="deepseek-ai/deepseek-coder-6.7b-instruct",
-    max_new_tokens=512,
+    "text2text-generation",
+    model="google/flan-t5-base",
+    max_new_tokens=256,
     temperature=0.3,
 )
 
