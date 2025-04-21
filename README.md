@@ -1,75 +1,89 @@
-# NLP Model with SQL Database Integration
+# 🧠 NLP Model with SQL Database Integration
 
-This project implements a Natural Language Processing (NLP) model using Hugging Face and LangChain to interact with a SQL database through natural language queries.
+This project implements a Natural Language Processing (NLP) agent using [LangChain](https://github.com/langchain-ai/langchain) and [Ollama](https://ollama.com) to translate natural language questions into SQL queries and execute them on a PostgreSQL database hosted in Supabase.
 
 ## 🚀 Features
 
-- Integration with Hugging Face models (DeepSeek Coder)
-- SQL database connection through LangChain
-- Natural language query processing
-- Intelligent SQL agent for query execution
+- ✅ Local LLaMA 3B model running via Ollama (no cloud token needed)
+- ✅ PostgreSQL database integration (via Supabase)
+- ✅ LangChain agent powered by SQL toolkit
+- ✅ Custom prompt for domain-specific query generation (urban & demographic data)
 
 ## 📋 Prerequisites
 
 - Python 3.11+
-- pip (Python package manager)
-- Hugging Face account with access token
-- SQL database (configured in Supabase)
+- [Ollama](https://ollama.com/) installed (`brew install ollama`)
+- Supabase PostgreSQL database URI
+- Make (optional, but recommended for command shortcuts)
 
-## 🔧 Installation
+## 🔧 Setup
 
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd nlp-model
-```
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd nlp-model
+   ```
 
-2. Create and activate virtual environment:
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
+2. **Create the `.env` file**:
+   ```bash
+   cp .env.example .env
+   ```
+   Add your Supabase credentials:
+   ```
+   SUPABASE_URI=your_supabase_postgres_uri
+   ```
 
-3. Install dependencies:
-```bash
-make install
-```
+3. **Start Ollama and pull the model**:
+   ```bash
+   ollama serve
+   ollama pull llama3:3b
+   ```
 
-4. Configure environment variables:
-   - Create `.env` file based on `.env.example`
-   - Add your credentials:
-     ```
-     SUPABASE_URI=your_supabase_uri
-     HF_TOKEN=your_huggingface_token
-     ```
+4. **Set up the environment and install dependencies**:
+   ```bash
+   make setup
+   ```
 
 ## 🎯 Usage
 
-To run the model:
-
+To run the project and ask a natural language question:
 ```bash
 make run
 ```
 
-To test a specific query, modify the `question` variable in `main.py`.
+Edit `main.py` to change the input question:
+```python
+question = "What is the neighborhood with the greatest number of people in Barcelona?"
+```
 
-## 🛠️ Make Commands
+## ⚙️ Makefile Commands
 
-- `make install`: Install all dependencies
-- `make run`: Run the model
-- `make clean`: Clean temporary files and cache
-- `make setup`: Set up virtual environment and dependencies
+- `make setup` – Create virtual environment and install all dependencies
+- `make install` – Install project dependencies
+- `make run` – Launch the app with the LLM agent
+- `make clean` – Remove Python cache and temporary files
+
+## 📂 Project Structure
+
+```bash
+.
+├── main.py              # Main application script
+├── custom_prompt.txt    # Domain-specific prompt for the SQL agent
+├── requirements.txt     # Python dependencies
+├── Makefile             # Utility commands
+├── .env                 # Environment variables (user-provided)
+```
 
 ## 📝 Notes
 
-- Make sure you have the correct credentials in the `.env` file
-- The model uses DeepSeek Coder 6.7B, which requires significant resources
-- Queries should be in Spanish as the model is configured for this language
+- This setup uses the lightweight LLaMA 3B model for fast, local execution
+- The SQL database must follow the schema defined in `custom_prompt.txt`
+- Ensure Ollama is running before executing the model
 
 ## 🤝 Contributing
 
-Contributions are welcome. Please open an issue first to discuss what you would like to change.
+Contributions are welcome! Feel free to fork the repo and open pull requests or issues.
 
 ## 📄 License
 
-This project is under the MIT License - see the [LICENSE](LICENSE) file for details. 
+This project is under the MIT License – see the [LICENSE](LICENSE) file for details.
